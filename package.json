@@ -1,0 +1,8 @@
+{
+  "name": "tete-ai-live",
+  "version": "2.0.0",
+  "description": "TETE AI — Live high-probability full-time draw predictions",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "api/predictions.js": { "maxDuration": 30 }
+  },
+  "crons": [
+    { "path": "/api/predictions?warm=1", "schedule": "0 7 * * *" }
+  ],
+  "headers": [
+    {
+      "source": "/api/predictions",
+      "headers": [{ "key": "Cache-Control", "value": "s-maxage=3600, stale-while-revalidate=7200" }]
+    }
+  ]
+}

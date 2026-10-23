@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TETE AI — Full-Time Draw Predictions</title>
+<meta name="description" content="High-probability full-time draw predictions across 15 leagues worldwide. 6 bookmakers. 6 draw signals. Updated daily.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1D3A; --ink2:#13294F; --ink3:#1A3355;
+  --paper:#FFFBF0; --paper2:#FFF4D6; --paper3:#F5EED8;
+  --line:#E2DCC8; --line2:#D6CFB8;
+  --gold:#C5A254; --gold2:#E8C86A; --goldBg:#FFF8E1; --goldLine:#F0D98A;
+  --teal:#0E9B8A; --tealBg:#E0F2EF; --tealDark:#0A7A6E;
+  --red:#C0392B; --redBg:#FCE8E8;
+  --muted:#6B7A94; --muted2:#8A9AB5;
+  color-scheme: light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;display:flex;align-items:center;gap:18px;padding:0 28px;height:54px;border-bottom:2px solid var(--gold)}
+.topbar .brand{font-family:Fraunces,serif;font-weight:900;letter-spacing:.04em;font-size:18px;display:flex;align-items:baseline;gap:8px}
+.topbar .brand span{color:var(--gold2)}
+.topbar .brand em{font-style:normal;font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--muted2);margin-left:6px}
+.nav{margin-left:8px;display:flex;gap:4px}
+.nav a{font-size:13px;font-weight:600;letter-spacing:.02em;padding:7px 12px;border-radius:8px;color:#9AA8C4;transition:.15s}
+.nav a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav a.active{color:var(--ink);background:var(--gold2)}
+.live{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:#9AA8C4}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;box-shadow:0 0 0 6px rgba(14,155,138,.18);animation:pulse 2s infinite}
+.live.live-on i{background:#1BDB8A;box-shadow:0 0 0 6px rgba(27,219,138,.20)}
+.live.demo i{background:#E8A317;box-shadow:0 0 0 6px rgba(232,163,23,.18)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 6px rgba(14,155,138,.18)}50%{box-shadow:0 0 0 8px rgba(14,155,138,.08)}}
+.datepill{font-family:JetBrains Mono,monospace;font-size:12px;font-weight:700;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:5px 10px;border-radius:20px;color:#C8D6F0}
+.btn-gold{background:var(--gold2);color:var(--ink);font-weight:700;font-size:13px;padding:8px 14px;border-radius:10px;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-gold:hover{filter:brightness(1.05)}
+.btn-gold:disabled{opacity:.6;cursor:wait}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+
+/* Hero */
+.hero{background:var(--ink);color:#fff;padding:34px 28px 0;overflow:hidden;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(600px 320px at 70% 10%, rgba(197,162,84,.12), transparent 70%), radial-gradient(500px 300px at 10% 80%, rgba(14,155,138,.10), transparent 60%);pointer-events:none}
+.hero-inner{position:relative;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--gold2);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:28px;height:2px;background:var(--gold2);display:inline-block}
+.hero h1{font-family:Fraunces,serif;font-weight:900;font-size:42px;line-height:.95;letter-spacing:-.02em;margin:10px 0 10px}
+.hero h1 em{font-style:normal;color:var(--gold2)}
+.hero p{color:#9AA8C4;font-size:14px;max-width:520px;line-height:1.6}
+.hero-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:14px 16px}
+.stat label{font-size:10px;font-weight:700;letter-spacing:.14em;color:#7A8AB0;display:block;margin-bottom:6px}
+.stat strong{font-family:Fraunces,serif;font-size:28px;font-weight:900;line-height:1}
+.stat small{font-size:11px;color:#7A8AB0;display:block;margin-top:2px}
+.stat.gold{background:linear-gradient(135deg, #C5A254 0%, #E8C86A 100%);color:var(--ink);border-color:transparent}
+.stat.gold label{color:rgba(11,29,58,.6)}
+.stat.gold small{color:rgba(11,29,58,.6)}
+.hero-board{margin-top:22px;background:var(--paper);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;color:var(--ink);max-width:1280px;margin-left:auto;margin-right:auto;position:relative}
+.hero-board::before{content:'';position:absolute;top:0;left:16px;right:16px;height:3px;background:var(--gold);border-radius:0 0 6px 6px}
+.hero-board b{font-size:13px}
+.hero-board span{font-size:12px;color:var(--muted)}
+.hero-board .spacer{flex:1}
+.pill{font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 10px;border-radius:20px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+.pill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill.live-pill{background:var(--teal);color:#fff;border-color:var(--teal)}
+.pill.demo-pill{background:#FFF3CD;color:#7A5A00;border-color:var(--goldLine)}
+
+/* Main */
+.wrap{max-width:1280px;margin:0 auto;padding:18px 28px 40px}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.search{flex:1;min-width:220px;max-width:360px;position:relative}
+.search input{width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px 10px 36px;font-size:13px;outline:0}
+.search input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(11,29,58,.08)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.45}
+.select{appearance:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 32px 10px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:12px;font-weight:700;letter-spacing:.04em;padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.hero-inner{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.15s}
+.card:hover{border-color:var(--line2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(11,29,58,.08)}
+.card.top{border-color:var(--goldLine);box-shadow:0 0 0 1px var(--goldLine), 0 8px 24px rgba(197,162,84,.18)}
+.card-head{display:flex;align-items:center;gap:10px;padding:12px 14px 10px;border-bottom:1px solid #F0EBD8;background:linear-gradient(180deg, #FFFEF8 0%, #FFFBF0 100%)}
+.card-head .league{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.card-head .time{margin-left:auto;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:700;background:var(--ink);color:#fff;padding:4px 8px;border-radius:20px}
+.badge{font-size:10px;font-weight:800;letter-spacing:.08em;padding:5px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px}
+.badge-banker{background:var(--ink);color:var(--gold2);border:1px solid var(--ink)}
+.badge-strong{background:var(--ink2);color:#fff}
+.badge-lean{background:#E8EEF6;color:var(--ink3);border:1px solid var(--line)}
+.badge-avoid{background:var(--redBg);color:var(--red);border:1px solid #F0C9C9}
+.card-body{padding:14px;display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.team{font-weight:700;font-size:15px;line-height:1.2}
+.team small{font-weight:500;font-size:11px;color:var(--muted);display:block;margin-top:2px}
+.vs{width:36px;height:36px;border-radius:50%;background:var(--paper3);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
+.card-meta{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 12px}
+.meta{font-size:11px;font-weight:600;background:var(--paper);border:1px solid var(--line);padding:5px 8px;border-radius:20px;color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.meta b{color:var(--ink)}
+.card-foot{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#FFFEF8;border-top:1px solid #F0EBD8}
+.score{font-family:JetBrains Mono,monospace;font-weight:700;font-size:12px;background:var(--ink);color:var(--gold2);padding:6px 9px;border-radius:8px;display:inline-flex;align-items:center;gap:6px}
+.score span{color:#fff}
+.edge{font-family:JetBrains Mono,monospace;font-size:11px;font-weight:700;padding:5px 8px;border-radius:20px}
+.edge.up{background:var(--tealBg);color:var(--tealDark);border:1px solid #BFE8E1}
+.edge.flat{background:#F0F0F0;color:var(--muted);border:1px solid var(--line)}
+.odds{font-family:JetBrains Mono,monospace;font-weight:700;font-size:13px}
+.odds small{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.06em}
+.meter{height:4px;background:#E8E0C8;border-radius:20px;overflow:hidden;margin:0 14px 12px}
+.meter i{display:block;height:100%;border-radius:20px}
+.meter-banker{background:var(--gold)}
+.meter-strong{background:var(--ink)}
+.meter-lean{background:#7A8AB0}
+.meter-avoid{background:#D9DEE8}
+.empty{grid-column:1/-1;background:#fff;border:1px dashed var(--line2);border-radius:16px;padding:36px;text-align:center}
+.empty strong{font-family:Fraunces,serif;font-size:18px}
+.empty p{color:var(--muted);font-size:13px;margin-top:6px;max-width:520px;margin-left:auto;margin-right:auto}
+.skeleton{height:180px;background:linear-gradient(90deg, #F5EED8 25%, #FFFBF0 50%, #F5EED8 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:16px;border:1px solid var(--line)}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.banner{border-radius:12px;padding:12px 14px;font-size:13px;display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.banner-live{background:var(--tealBg);border:1px solid #BFE8E1;color:var(--tealDark)}
+.banner-demo{background:var(--goldBg);border:1px solid var(--goldLine);color:#7A5A00}
+.banner i{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.banner-live i{background:var(--teal)}
+.banner-demo i{background:var(--gold)}
+
+/* Sections */
+.section{margin-top:28px}
+.section h2{font-family:Fraunces,serif;font-weight:900;font-size:22px;display:flex;align-items:center;gap:10px}
+.section h2 i{width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block}
+.section p.lead{color:var(--muted);font-size:13px;margin:6px 0 14px;max-width:720px}
+.table-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-align:left;padding:10px 12px;white-space:nowrap;border-bottom:1px solid var(--line);background:#FFFEF8;position:sticky;top:0}
+td{padding:10px 12px;border-bottom:1px solid #F0EBD8;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.pick{background:var(--goldBg)}
+.num{font-family:JetBrains Mono,monospace;font-weight:700}
+.badge-sm{font-size:10px;font-weight:800;padding:3px 7px;border-radius:20px;display:inline-block}
+.how{background:var(--ink);color:#fff;border-radius:18px;padding:22px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+@media(max-width:900px){.how{grid-template-columns:1fr}}
+.how h3{font-family:Fraunces,serif;font-size:20px;margin-bottom:8px}
+.how p{color:#9AA8C4;font-size:13px;line-height:1.6}
+.steps{list-style:none;display:grid;gap:10px;margin-top:12px}
+.steps li{display:flex;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:10px 12px}
+.steps li b{width:26px;height:26px;border-radius:50%;background:var(--gold2);color:var(--ink);display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0}
+.steps li span{font-size:13px;line-height:1.5}
+.steps li small{color:#9AA8C4}
+.signal{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:10px 12px}
+.signal strong{font-family:JetBrains Mono,monospace;font-size:12px;color:var(--gold2)}
+.signal span{font-size:13px}
+.signal small{margin-left:auto;font-family:JetBrains Mono,monospace;font-size:11px;color:#9AA8C4}
+.footer{margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.footer strong{color:var(--ink)}
+@media(max-width:640px){.topbar{padding:0 14px}.hero{padding:22px 14px 0}.wrap{padding:14px 14px 28px}.hero h1{font-size:30px}.nav{display:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">TETE <span>AI</span> <em>DRAW EDITION</em></div>
+  <nav class="nav">
+    <a class="active" href="#picks">Draw Picks</a>
+    <a href="#all">All Matches</a>
+    <a href="#odds">Bookmaker Odds</a>
+    <a href="#how">How It Works</a>
+  </nav>
+  <div class="live" id="liveDot"><i></i> <span id="liveText">LOADING</span></div>
+  <div class="datepill" id="datePill">—</div>
+  <button class="btn-gold" id="runBtn">↻ Refresh</button>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Full-time draws — specialist model</div>
+      <h1>Every draw<br><em>worth backing</em></h1>
+      <p>We scan every fixture today across 15 leagues and 6 bookmakers, then run a 6-signal draw ensemble to find the matches most likely to finish level.</p>
+      <div class="hero-actions">
+        <button class="btn-gold" onclick="document.getElementById('picks').scrollIntoView({behavior:'smooth'})">View draw picks →</button>
+        <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How the score works</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat gold"><label>Draw picks today</label><strong id="kPicks">—</strong><small>≥ 28% model draw prob</small></div>
+      <div class="stat"><label style="color:#7A8AB0">Bankers & Strong</label><strong id="kBankers" style="color:#fff">—</strong><small>Score ≥ 62</small></div>
+      <div class="stat"><label>Avg draw prob</label><strong id="kAvg" style="color:#fff">—</strong><small>across all matches</small></div>
+      <div class="stat"><label>Value draws</label><strong id="kValue" style="color:#fff">—</strong><small>Edge ≥ 4% vs market</small></div>
+    </div>
+  </div>
+  <div class="hero-board">
+    <b>Today's board</b><span id="boardSub">—</span>
+    <span class="spacer"></span>
+    <span class="pill" id="modePill">Loading…</span>
+    <span class="pill" id="bookPill">6 bookmakers</span>
+  </div>
+</section>
+
+<main class="wrap">
+  <div id="banner"></div>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20L16 16"/></svg>
+      <input id="q" placeholder="Search team or league…" autocomplete="off">
+    </label>
+    <select class="select" id="leagueFilter"><option value="">All leagues</option></select>
+    <div class="chips" id="chips">
+      <button class="chip active" data-f="all">All picks</button>
+      <button class="chip" data-f="banker">★ Bankers</button>
+      <button class="chip" data-f="strong">● Strong</button>
+      <button class="chip" data-f="value">◇ Value</button>
+    </div>
+  </div>
+
+  <div id="picks"><div class="grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div>
+
+  <section class="section" id="all">
+    <h2><i></i> All matches today</h2>
+    <p class="lead">Every fixture scanned — draw probability shown for context. The grey rows didn't meet the 28% bar; the gold rows are your picks.</p>
+    <div class="table-wrap"><table id="allTable"></table></div>
+  </section>
+
+  <section class="section" id="odds">
+    <h2><i></i> Bookmaker odds</h2>
+    <p class="lead">Decimal odds from 6 bookmakers. The draw price is what matters here — green is the best price for X.</p>
+    <div class="table-wrap"><table id="oddsTable"></table></div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="how">
+      <div>
+        <h3>How the Draw Score works</h3>
+        <p>Draws are the hardest outcome in football — about 26% of games. "High probability" means 28–35%, not 70%. The score rewards agreement across signals.</p>
+        <ul class="steps">
+          <li><b>★</b><span><strong>Banker</strong> — Score ≥ 72 + draw prob ≥ 30%. Highest conviction. Rare: 0–3 a day.<br><small>Best candidates on the board. Still not a guarantee.</small></span></li>
+          <li><b>●</b><span><strong>Strong</strong> — Score ≥ 62 + draw prob ≥ 28%. High confidence, broad signal agreement.<br><small>Solid draw picks.</small></span></li>
+          <li><b>◐</b><span><strong>Lean</strong> — Score ≥ 45. Worth a look, thinner edge.<br><small>Consider but be cautious.</small></span></li>
+          <li><b>○</b><span><strong>Avoid</strong> — Below threshold. Not recommended as a draw.</span></li>
+        </ul>
+        <p style="margin-top:12px;font-size:11px;color:#7A8AB0">Value = model draw prob minus market fair draw prob. Quarter-Kelly, capped at 5% bankroll. Information only — not financial advice. 18+ · Gamble responsibly.</p>
+      </div>
+      <div>
+        <h3 style="font-size:16px">6 draw signals</h3>
+        <div style="display:grid;gap:8px;margin-top:10px">
+          <div class="signal"><strong>28%</strong><span>Poisson xG parity</span><small>tight expected goals</small></div>
+          <div class="signal"><strong>22%</strong><span>Elo closeness</span><small>equal strength</small></div>
+          <div class="signal"><strong>20%</strong><span>H2H draw rate</span><small>these two before</small></div>
+          <div class="signal"><strong>15%</strong><span>Form parity</span><small>similar PPG + draws</small></div>
+          <div class="signal"><strong>8%</strong><span>Defensive</span><small>low total xG</small></div>
+          <div class="signal"><strong>7%</strong><span>Market</span><small>bookmaker draw price</small></div>
+        </div>
+        <p style="margin-top:12px">Poisson enumerates every scoreline 0–7 via expected goals; Elo gap maps to draw chance; H2H is smoothed with pseudo-counts. Final draw prob is blended 82% specialist / 18% generic 1X2 for calibration.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <strong>TETE AI Draw Edition v2.0</strong><span>·</span><span id="footMode">—</span><span>·</span><span>For information only. No prediction is certain. Past performance is not indicative of future results.</span>
+    <span style="margin-left:auto"><a href="#how" style="text-decoration:underline;text-underline-offset:3px">Responsible gambling</a></span>
+  </div>
+</main>
+
+<script>
+// ── Demo fallback (used if /api/predictions is unreachable, e.g. file:// preview) ──
+const DEMO_FIXTURES = [
+  {id:"DR01",league:"Premier League",country:"England",kickoff:"19:45",home:"Aston Villa",away:"Brighton",home_elo:1620,away_elo:1605},
+  {id:"DR02",league:"Premier League",country:"England",kickoff:"20:00",home:"Chelsea",away:"Newcastle United",home_elo:1655,away_elo:1640},
+  {id:"DR03",league:"La Liga",country:"Spain",kickoff:"19:00",home:"Real Sociedad",away:"Villarreal",home_elo:1635,away_elo:1628},
+  {id:"DR04",league:"Serie A",country:"Italy",kickoff:"19:45",home:"Napoli",away:"Juventus",home_elo:1685,away_elo:1670},
+  {id:"DR05",league:"Bundesliga",country:"Germany",kickoff:"19:30",home:"RB Leipzig",away:"Bayer Leverkusen",home_elo:1660,away_elo:1675},
+  {id:"DR06",league:"Ligue 1",country:"France",kickoff:"20:00",home:"Lille",away:"Nice",home_elo:1600,away_elo:1595},
+  {id:"DR07",league:"Eredivisie",country:"Netherlands",kickoff:"19:00",home:"Ajax",away:"PSV Eindhoven",home_elo:1630,away_elo:1645},
+  {id:"DR08",league:"Primeira Liga",country:"Portugal",kickoff:"20:15",home:"Benfica",away:"Porto",home_elo:1640,away_elo:1655},
+  {id:"DR09",league:"Championship",country:"England",kickoff:"19:45",home:"Leeds United",away:"Leicester City",home_elo:1550,away_elo:1540},
+  {id:"DR10",league:"Champions League",country:"UEFA",kickoff:"20:00",home:"Inter Milan",away:"Atletico Madrid",home_elo:1735,away_elo:1700},
+  {id:"DR11",league:"Serie A",country:"Italy",kickoff:"19:45",home:"AS Roma",away:"Lazio",home_elo:1645,away_elo:1638},
+  {id:"DR12",league:"La Liga",country:"Spain",kickoff:"21:00",home:"Athletic Bilbao",away:"Real Betis",home_elo:1610,away_elo:1602},
+  {id:"DR13",league:"Premier League",country:"England",kickoff:"20:00",home:"Manchester City",away:"Burnley",home_elo:1805,away_elo:1420},
+  {id:"DR14",league:"Bundesliga",country:"Germany",kickoff:"19:30",home:"Bayern Munich",away:"Heidenheim",home_elo:1790,away_elo:1445},
+  {id:"DR15",league:"Ligue 1",country:"France",kickoff:"20:00",home:"PSG",away:"Clermont",home_elo:1750,away_elo:1410},
+  {id:"DR16",league:"MLS",country:"USA",kickoff:"00:30+1",home:"LAFC",away:"Inter Miami",home_elo:1520,away_elo:1535},
+];
+const FORM = {
+  "Aston Villa":{last5:"W D D W D",gf:7,ga:5,ppg:1.8,draws_last5:3},"Brighton":{last5:"D D W D L",gf:6,ga:6,ppg:1.2,draws_last5:3},
+  "Chelsea":{last5:"W D D W D",gf:7,ga:4,ppg:1.8,draws_last5:3},"Newcastle United":{last5:"D W D L D",gf:6,ga:5,ppg:1.4,draws_last5:3},
+  "Real Sociedad":{last5:"D W D D W",gf:6,ga:3,ppg:1.8,draws_last5:3},"Villarreal":{last5:"W D D D L",gf:5,ga:4,ppg:1.4,draws_last5:3},
+  "Napoli":{last5:"W D W D D",gf:7,ga:4,ppg:1.8,draws_last5:3},"Juventus":{last5:"D W D W D",gf:6,ga:3,ppg:1.8,draws_last5:3},
+  "RB Leipzig":{last5:"W D L D W",gf:6,ga:5,ppg:1.4,draws_last5:2},"Bayer Leverkusen":{last5:"D W D W D",gf:7,ga:4,ppg:1.8,draws_last5:3},
+  "Lille":{last5:"D D W D W",gf:6,ga:3,ppg:1.8,draws_last5:3},"Nice":{last5:"W D D L D",gf:5,ga:4,ppg:1.2,draws_last5:3},
+  "Ajax":{last5:"W D W D D",gf:8,ga:5,ppg:1.8,draws_last5:3},"PSV Eindhoven":{last5:"D W W D D",gf:9,ga:4,ppg:2.0,draws_last5:3},
+  "Benfica":{last5:"W D D L W",gf:7,ga:5,ppg:1.4,draws_last5:2},"Porto":{last5:"D W W D D",gf:7,ga:4,ppg:1.8,draws_last5:3},
+  "Leeds United":{last5:"W D D W D",gf:7,ga:5,ppg:1.6,draws_last5:3},"Leicester City":{last5:"D W D D L",gf:6,ga:6,ppg:1.2,draws_last5:3},
+  "Inter Milan":{last5:"W W D W D",gf:8,ga:3,ppg:2.0,draws_last5:2},"Atletico Madrid":{last5:"W D W D D",gf:6,ga:3,ppg:1.8,draws_last5:3},
+  "AS Roma":{last5:"D D W D L",gf:5,ga:5,ppg:1.0,draws_last5:3},"Lazio":{last5:"D W D D W",gf:6,ga:4,ppg:1.6,draws_last5:3},
+  "Athletic Bilbao":{last5:"W D D W D",gf:6,ga:3,ppg:1.8,draws_last5:3},"Real Betis":{last5:"D D W D D",gf:5,ga:4,ppg:1.4,draws_last5:4},
+  "Manchester City":{last5:"W W W W D",gf:14,ga:2,ppg:2.6,draws_last5:1},"Burnley":{last5:"L L D L L",gf:2,ga:10,ppg:0.2,draws_last5:1},
+  "Bayern Munich":{last5:"W W W D W",gf:14,ga:4,ppg:2.4,draws_last5:1},"Heidenheim":{last5:"L D L L D",gf:3,ga:9,ppg:0.4,draws_last5:2},
+  "PSG":{last5:"W W W W W",gf:13,ga:2,ppg:3.0,draws_last5:0},"Clermont":{last5:"L L L D L",gf:2,ga:11,ppg:0.2,draws_last5:1},
+  "LAFC":{last5:"W D D L W",gf:6,ga:5,ppg:1.4,draws_last5:2},"Inter Miami":{last5:"W D W D D",gf:7,ga:4,ppg:1.8,draws_last5:3},
+};
+const H2H = {
+  "Aston Villa|Brighton":{draws:3,home_wins:1,away_wins:1,h2h:"D D W D L"},"Chelsea|Newcastle United":{draws:3,home_wins:2,away_wins:0,h2h:"D W D D W"},
+  "Real Sociedad|Villarreal":{draws:4,home_wins:1,away_wins:0,h2h:"D D D W D"},"Napoli|Juventus":{draws:4,home_wins:1,away_wins:0,h2h:"D D W D D"},
+  "RB Leipzig|Bayer Leverkusen":{draws:3,home_wins:1,away_wins:1,h2h:"D W D D L"},"Lille|Nice":{draws:4,home_wins:1,away_wins:0,h2h:"D D W D D"},
+  "Ajax|PSV Eindhoven":{draws:3,home_wins:1,away_wins:1,h2h:"D W D L D"},"Benfica|Porto":{draws:3,home_wins:2,away_wins:0,h2h:"D W D D W"},
+  "Leeds United|Leicester City":{draws:3,home_wins:1,away_wins:1,h2h:"W D D D L"},"Inter Milan|Atletico Madrid":{draws:2,home_wins:2,away_wins:1,h2h:"D W D L W"},
+  "AS Roma|Lazio":{draws:4,home_wins:1,away_wins:0,h2h:"D D D W D"},"Athletic Bilbao|Real Betis":{draws:4,home_wins:1,away_wins:0,h2h:"D D W D D"},
+  "Manchester City|Burnley":{draws:0,home_wins:5,away_wins:0,h2h:"W W W W W"},"Bayern Munich|Heidenheim":{draws:1,home_wins:4,away_wins:0,h2h:"W W D W W"},
+  "PSG|Clermont":{draws:0,home_wins:5,away_wins:0,h2h:"W W W W W"},"LAFC|Inter Miami":{draws:3,home_wins:1,away_wins:1,h2h:"D L W D D"},
+};
+const ODDS = {
+  "DR01":{bet365:[2.55,3.20,2.75],pinnacle:[2.60,3.15,2.70],williamhill:[2.50,3.25,2.80],betfair:[2.58,3.18,2.72],unibet:[2.52,3.22,2.78],"1xbet":[2.62,3.10,2.68]},
+  "DR02":{bet365:[2.30,3.30,3.10],pinnacle:[2.32,3.28,3.05],williamhill:[2.28,3.35,3.15],betfair:[2.31,3.30,3.08],unibet:[2.29,3.32,3.12],"1xbet":[2.35,3.25,3.02]},
+  "DR03":{bet365:[2.45,3.10,2.90],pinnacle:[2.48,3.08,2.88],williamhill:[2.42,3.15,2.95],betfair:[2.46,3.12,2.90],unibet:[2.44,3.14,2.92],"1xbet":[2.50,3.05,2.85]},
+  "DR04":{bet365:[2.40,3.15,2.95],pinnacle:[2.42,3.12,2.90],williamhill:[2.38,3.20,3.00],betfair:[2.41,3.14,2.92],unibet:[2.39,3.18,2.97],"1xbet":[2.45,3.08,2.88]},
+  "DR05":{bet365:[2.60,3.25,2.70],pinnacle:[2.65,3.20,2.65],williamhill:[2.55,3.30,2.75],betfair:[2.62,3.22,2.68],unibet:[2.58,3.28,2.72],"1xbet":[2.68,3.15,2.62]},
+  "DR06":{bet365:[2.50,3.15,2.80],pinnacle:[2.52,3.12,2.78],williamhill:[2.48,3.20,2.85],betfair:[2.51,3.14,2.80],unibet:[2.49,3.18,2.82],"1xbet":[2.55,3.08,2.75]},
+  "DR07":{bet365:[2.50,3.30,2.80],pinnacle:[2.52,3.28,2.78],williamhill:[2.48,3.35,2.85],betfair:[2.51,3.30,2.80],unibet:[2.49,3.32,2.82],"1xbet":[2.55,3.25,2.75]},
+  "DR08":{bet365:[2.40,3.20,2.95],pinnacle:[2.42,3.18,2.90],williamhill:[2.38,3.25,3.00],betfair:[2.41,3.20,2.92],unibet:[2.39,3.22,2.97],"1xbet":[2.45,3.15,2.88]},
+  "DR09":{bet365:[2.35,3.20,3.00],pinnacle:[2.33,3.22,3.02],williamhill:[2.37,3.18,2.98],betfair:[2.34,3.20,3.00],unibet:[2.36,3.18,2.98],"1xbet":[2.30,3.25,3.05]},
+  "DR10":{bet365:[2.10,3.30,3.40],pinnacle:[2.08,3.32,3.45],williamhill:[2.12,3.25,3.35],betfair:[2.09,3.30,3.42],unibet:[2.11,3.28,3.38],"1xbet":[2.05,3.35,3.50]},
+  "DR11":{bet365:[2.55,3.10,2.85],pinnacle:[2.58,3.08,2.82],williamhill:[2.52,3.15,2.90],betfair:[2.56,3.10,2.85],unibet:[2.54,3.12,2.87],"1xbet":[2.60,3.05,2.80]},
+  "DR12":{bet365:[2.45,3.15,2.90],pinnacle:[2.48,3.12,2.88],williamhill:[2.42,3.20,2.95],betfair:[2.46,3.14,2.90],unibet:[2.44,3.18,2.92],"1xbet":[2.50,3.08,2.85]},
+  "DR13":{bet365:[1.15,7.50,16.00],pinnacle:[1.13,8.00,18.00],williamhill:[1.17,7.00,15.00],betfair:[1.14,7.80,17.00],unibet:[1.16,7.20,15.50],"1xbet":[1.12,8.50,19.00]},
+  "DR14":{bet365:[1.18,7.00,14.00],pinnacle:[1.16,7.50,15.00],williamhill:[1.20,6.80,13.00],betfair:[1.17,7.20,14.50],unibet:[1.19,6.90,13.50],"1xbet":[1.15,8.00,16.00]},
+  "DR15":{bet365:[1.12,8.00,20.00],pinnacle:[1.10,8.50,22.00],williamhill:[1.14,7.50,19.00],betfair:[1.11,8.20,21.00],unibet:[1.13,7.80,19.50],"1xbet":[1.09,9.00,23.00]},
+  "DR16":{bet365:[2.30,3.30,2.90],pinnacle:[2.32,3.28,2.88],williamhill:[2.28,3.35,2.95],betfair:[2.31,3.30,2.90],unibet:[2.29,3.32,2.92],"1xbet":[2.35,3.25,2.85]},
+};
+
+function poissonPmf(k, lam){ if(lam<=0) return k===0?1:0; let f=1; for(let i=2;i<=k;i++) f*=i; return Math.pow(lam,k)*Math.exp(-lam)/f; }
+function estimateLambdas(f){
+  const hf=FORM[f.home]||{gf:7,ga:6}, af=FORM[f.away]||{gf:7,ga:6};
+  const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+  return [Math.max(0.4,Math.min(3.2,1.45*clamp(hf.gf/7,0.6,1.7)*clamp(af.ga/7,0.6,1.7)*clamp(1+(f.home_elo-f.away_elo)/100*0.04,0.75,1.35))),
+          Math.max(0.3,Math.min(3.0,1.20*clamp(af.gf/7,0.6,1.7)*clamp(hf.ga/7,0.6,1.7)*clamp(1-(f.home_elo-f.away_elo)/100*0.04,0.75,1.35)))];
+}
+function oddsSummary(odds){
+  const vals=Object.values(odds); if(!vals.length) return {consensus:[0,0,0],best:[0,0,0],count:0};
+  const n=vals.length; return {consensus:[vals.reduce((s,v)=>s+v[0],0)/n,vals.reduce((s,v)=>s+v[1],0)/n,vals.reduce((s,v)=>s+v[2],0)/n],best:[Math.max(...vals.map(v=>v[0])),Math.max(...vals.map(v=>v[1])),Math.max(...vals.map(v=>v[2]))],count:n};
+}
+function fairDraw(odds){ const s=oddsSummary(odds); if(!s.consensus[1]) return 0.27; const raw=s.consensus.map(o=>1/o), tot=raw.reduce((a,b)=>a+b,0); return raw[1]/tot; }
+
+function scoreLocal(f){
+  f.odds=ODDS[f.id]||{}; f.home_form=FORM[f.home]||{last5:"—",gf:7,ga:6,ppg:1.3,draws_last5:1}; f.away_form=FORM[f.away]||{last5:"—",gf:7,ga:6,ppg:1.3,draws_last5:1};
+  const key=f.home+"|"+f.away, rev=f.away+"|"+f.home; let h2h=H2H[key]||H2H[rev];
+  if(!h2h) h2h={home_wins:1,draws:2,away_wins:1,h2h:"D D D D D"}; else if(H2H[rev]&&!H2H[key]) h2h={home_wins:h2h.away_wins,draws:h2h.draws,away_wins:h2h.home_wins,h2h:h2h.h2h};
+  f.h2h=h2h; const gap=Math.abs(f.home_elo-f.away_elo); f.elo_draw_prob=Math.max(0.18,0.30-gap/600);
+  const [lh,la]=estimateLambdas(f); let pd=0,tot=0; for(let gh=0;gh<=7;gh++) for(let ga=0;ga<=7;ga++){const p=poissonPmf(gh,lh)*poissonPmf(ga,la); tot+=p; if(gh===ga) pd+=p;} pd/=tot;
+  const sPoisson=pd, sElo=0.55*(0.30*Math.exp(-gap/280))+0.45*f.elo_draw_prob+0.08;
+  const sH2h=0.65*((h2h.draws+1.4)/((h2h.home_wins+h2h.draws+h2h.away_wins)+3.8))+0.35*0.28;
+  const hppg=f.home_form.ppg, appp=f.away_form.ppg, gapPpg=Math.abs(hppg-appp);
+  const sForm=Math.max(0.14,Math.min(0.38,0.31*Math.exp(-gapPpg*0.9)+( (f.home_form.draws_last5+f.away_form.draws_last5)/2/5)*0.06+(1<=hppg&&hppg<=1.9&&1<=appp&&appp<=1.9?0.02:0)+0.05));
+  const avgTot=(f.home_form.gf+f.home_form.ga+f.away_form.gf+f.away_form.ga)/2;
+  const sDef=Math.max(0.14,Math.min(0.36,0.5*(0.38-avgTot/5*0.022)+0.5*(0.30-(lh+la)*0.018)+0.08));
+  const sMarket=fairDraw(f.odds);
+  const sigs={poisson:sPoisson,elo_gap:sElo,h2h:sH2h,form_parity:sForm,defensive:sDef,market:sMarket};
+  const w={poisson:0.28,elo_gap:0.22,h2h:0.20,form_parity:0.15,defensive:0.08,market:0.07};
+  let drawProb=Object.keys(w).reduce((s,k)=>s+sigs[k]*w[k],0); drawProb=drawProb*0.82+(0.27+(sPoisson-0.27)*0.3)*0.18;
+  const vals=Object.values(sigs), mean=vals.reduce((a,b)=>a+b,0)/vals.length, std=Math.sqrt(vals.reduce((s,v)=>s+(v-mean)**2,0)/vals.length);
+  let score=(drawProb-0.10)/0.30*100+Math.max(-8,Math.min(10,(0.04-std)*180))+(vals.filter(v=>v>=0.28).length-3)*1.5; score=Math.max(5,Math.min(98,score));
+  let label="○ AVOID"; if(score>=72&&drawProb>=0.30) label="★ BANKER"; else if(score>=62&&drawProb>=0.28) label="● STRONG"; else if(score>=45&&drawProb>=0.25) label="◐ LEAN";
+  const mkt=sMarket, edge=drawProb-mkt, summ=oddsSummary(f.odds); let bestBook="—"; for(const [bk,ol] of Object.entries(f.odds)) if(Math.abs(ol[1]-summ.best[1])<0.001){bestBook=bk;break;}
+  let bestP=0,best="1-1"; for(let gh=0;gh<=4;gh++) for(let ga=0;ga<=4;ga++){const p=poissonPmf(gh,lh)*poissonPmf(ga,la); if(p>bestP){bestP=p; best=gh+"-"+ga;}}
+  return {...f, odds:f.odds, home_form:f.home_form, away_form:f.away_form, h2h, signals:sigs, lambda_home:lh, lambda_away:la, exp_score:lh.toFixed(1)+" – "+la.toFixed(1), most_likely_score:best, draw_prob:drawProb, draw_score:score, draw_label:label, is_pick:drawProb>=0.28, draw_edge:edge, market_draw_prob:mkt, has_value:edge>=0.04, best_draw_odds:summ.best[1]||0, consensus_draw_odds:summ.consensus[1]||0, best_draw_book:bestBook, bookmaker_count:summ.count, consensus_odds:summ.consensus, best_odds:summ.best};
+}
+
+// ── State ──
+let FIXTURES = [];
+let MODE = "demo";
+let filterF = "all";
+
+async function load(){
+  // Try live API first (when hosted on Vercel); fall back to local scoring for file:// previews
+  try{
+    const r = await fetch('/api/predictions', {headers:{'Accept':'application/json'}});
+    if(r.ok){
+      const data = await r.json();
+      if(data.fixtures && data.fixtures.length){
+        FIXTURES = data.fixtures;
+        MODE = data.mode || "demo";
+        renderBanner();
+        render();
+        return;
+      }
+    }
+    throw new Error("API not ready");
+  }catch(e){
+    // Local fallback — score demo fixtures in the browser
+    FIXTURES = DEMO_FIXTURES.map(f=>scoreLocal({...f}));
+    MODE = "demo";
+    renderBanner();
+    render();
+  }
+}
+
+function renderBanner(){
+  const b = document.getElementById('banner');
+  const liveDot = document.getElementById('liveDot'), liveText=document.getElementById('liveText'), modePill=document.getElementById('modePill'), footMode=document.getElementById('footMode');
+  if(MODE==="live"){
+    liveDot.className="live live-on"; liveText.textContent="LIVE";
+    modePill.textContent="LIVE — real bookmaker odds"; modePill.className="pill live-pill";
+    footMode.textContent="Live — The Odds API · auto-refreshes daily at 07:00 UTC";
+    b.innerHTML=`<div class="banner banner-live"><i></i> <strong>Live odds</strong> — pulled from 6 bookmakers a few minutes ago. Picks update automatically every morning at 07:00 UTC.</div>`;
+  } else {
+    liveDot.className="live demo"; liveText.textContent="DEMO";
+    modePill.textContent="DEMO — sample fixtures"; modePill.className="pill demo-pill";
+    footMode.textContent="Demo — sample fixtures (add API keys in Vercel to go live)";
+    b.innerHTML=`<div class="banner banner-demo"><i></i> <strong>Demo mode</strong> — sample fixtures. Add your free API keys in Vercel (Settings → Environment Variables) to switch to live odds. See README for the 2-minute setup.</div>`;
+  }
+}
+
+function render(){
+  const q=(document.getElementById('q').value||"").toLowerCase();
+  const league=document.getElementById('leagueFilter').value;
+  let picks=FIXTURES.filter(f=>f.is_pick).filter(f=>{
+    if(q && !(f.home.toLowerCase().includes(q)||f.away.toLowerCase().includes(q)||f.league.toLowerCase().includes(q))) return false;
+    if(league && f.league!==league) return false;
+    if(filterF==="banker" && f.draw_label!=="★ BANKER") return false;
+    if(filterF==="strong" && f.draw_label!=="● STRONG") return false;
+    if(filterF==="value" && !f.has_value) return false;
+    return true;
+  }).sort((a,b)=>b.draw_score - a.draw_score);
+
+  const allPicks=FIXTURES.filter(f=>f.is_pick);
+  document.getElementById('kPicks').textContent=allPicks.length;
+  document.getElementById('kBankers').textContent=FIXTURES.filter(f=>f.draw_label==="★ BANKER"||f.draw_label==="● STRONG").length;
+  const avg=FIXTURES.length? FIXTURES.reduce((s,f)=>s+f.draw_prob,0)/FIXTURES.length : 0;
+  document.getElementById('kAvg').textContent=(avg*100).toFixed(0)+"%";
+  document.getElementById('kValue').textContent=FIXTURES.filter(f=>f.has_value&&f.is_pick).length;
+  document.getElementById('datePill').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('boardSub').textContent=`${FIXTURES.length} matches · ${allPicks.length} draw picks · ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'})}`;
+
+  const picksEl=document.getElementById('picks');
+  if(!picks.length){
+    picksEl.innerHTML=`<div class="empty"><strong>No draw picks match your filter</strong><p>Try “All picks” or clear the search. Mismatches and open games rarely hit 28% draw probability — that's by design.</p></div>`;
+  } else {
+    picksEl.innerHTML=`<div class="grid">${picks.map(f=>{
+      const meterClass=f.draw_label==="★ BANKER"?"meter-banker":f.draw_label==="● STRONG"?"meter-strong":f.draw_label==="◐ LEAN"?"meter-lean":"meter-avoid";
+      const badgeClass=f.draw_label==="★ BANKER"?"badge-banker":f.draw_label==="● STRONG"?"badge-strong":f.draw_label==="◐ LEAN"?"badge-lean":"badge-avoid";
+      return `<article class="card ${f.draw_label==="★ BANKER"?'top':''}">
+        <div class="card-head"><span class="league">${f.league} · ${f.country}</span><span class="badge ${badgeClass}">${f.draw_label}</span><span class="time">${f.kickoff}</span></div>
+        <div class="card-body">
+          <div class="team">${f.home}<small>${(f.home_form&&f.home_form.last5)||"—"} · ${(f.home_form&&f.home_form.ppg||0).toFixed(1)} PPG</small></div>
+          <div class="vs">X</div>
+          <div class="team" style="text-align:right">${f.away}<small>${(f.away_form&&f.away_form.last5)||"—"} · ${(f.away_form&&f.away_form.ppg||0).toFixed(1)} PPG</small></div>
+        </div>
+        <div class="card-meta">
+          <span class="meta">xG <b>${f.exp_score||"—"}</b></span>
+          <span class="meta">Likely <b>${f.most_likely_score||"—"}</b></span>
+          <span class="meta">H2H draws <b>${(f.h2h&&f.h2h.draws)||0}/5</b></span>
+          <span class="meta">H2H <b>${(f.h2h&&f.h2h.h2h)||"—"}</b></span>
+        </div>
+        <div class="meter"><i class="${meterClass}" style="width:${Math.min(100,f.draw_score)}%"></i></div>
+        <div class="card-foot">
+          <span class="score">DRAW <span>${(f.draw_prob*100).toFixed(0)}%</span> · ${f.draw_score.toFixed(0)}/100</span>
+          <span class="edge ${f.draw_edge>=0.04?'up':'flat'}">${f.draw_edge>=0.01?'+':''}${(f.draw_edge*100).toFixed(1)}% vs market</span>
+          <span style="margin-left:auto;text-align:right"><span class="odds">${f.best_draw_odds?f.best_draw_odds.toFixed(2):'—'} <small>${f.best_draw_book||"—"}</small></span></span>
+        </div>
+      </article>`;
+    }).join('')}</div>`;
+  }
+
+  // All matches table
+  let sorted=[...FIXTURES].sort((a,b)=>b.draw_score - a.draw_score).filter(f=>{
+    if(q && !(f.home.toLowerCase().includes(q)||f.away.toLowerCase().includes(q)||f.league.toLowerCase().includes(q))) return false;
+    if(league && f.league!==league) return false;
+    return true;
+  });
+  document.getElementById('allTable').innerHTML=`<thead><tr><th>#</th><th>Match</th><th>League</th><th>Kickoff</th><th>Draw prob</th><th>Score</th><th>Rating</th><th>Pick?</th><th>xG</th><th>Likely</th><th>Best X odds</th><th>Book</th><th>Edge</th></tr></thead>
+    <tbody>${sorted.map((f,i)=>`<tr class="${f.is_pick?'pick':''}">
+      <td class="num">${i+1}</td><td><strong>${f.home}</strong> vs <strong>${f.away}</strong></td><td>${f.league}</td><td class="num">${f.kickoff}</td>
+      <td class="num">${(f.draw_prob*100).toFixed(1)}%</td><td class="num">${f.draw_score.toFixed(0)}</td>
+      <td><span class="badge-sm" style="background:${f.draw_label==='★ BANKER'?'var(--ink)':f.draw_label==='● STRONG'?'var(--ink2)':f.draw_label==='◐ LEAN'?'#E8EEF6':'#FCE8E8'};color:${f.draw_label==='★ BANKER'?'var(--gold2)':f.draw_label==='● STRONG'?'#fff':f.draw_label==='◐ LEAN'?'var(--ink3)':'var(--red)'}">${f.draw_label}</span></td>
+      <td>${f.is_pick?'✓':'—'}</td><td class="num">${f.exp_score||"—"}</td><td class="num">${f.most_likely_score||"—"}</td>
+      <td class="num">${f.best_draw_odds?f.best_draw_odds.toFixed(2):'—'}</td><td>${f.best_draw_book||"—"}</td>
+      <td class="num" style="color:${f.draw_edge>=0.04?'var(--tealDark)':f.draw_edge<0?'var(--red)':'var(--muted)'}">${f.draw_edge>=0?'+':''}${(f.draw_edge*100).toFixed(1)}%</td>
+    </tr>`).join('')}</tbody>`;
+
+  // Odds table
+  const bks=["bet365","pinnacle","williamhill","betfair","unibet","1xbet"];
+  document.getElementById('oddsTable').innerHTML=`<thead><tr><th>#</th><th>Match</th><th>League</th>${bks.map(b=>`<th>${b} (H / X / A)</th>`).join('')}<th>Consensus</th><th>Best</th></tr></thead>
+    <tbody>${FIXTURES.map((f,i)=>{
+      const summ={consensus:f.consensus_odds||[0,0,0], best:f.best_odds||[0,0,0]};
+      // fallback compute if not present
+      if(!summ.consensus[1] && f.odds){
+        const vals=Object.values(f.odds); if(vals.length){ const n=vals.length; summ.consensus=[vals.reduce((s,v)=>s+v[0],0)/n,vals.reduce((s,v)=>s+v[1],0)/n,vals.reduce((s,v)=>s+v[2],0)/n]; summ.best=[Math.max(...vals.map(v=>v[0])),Math.max(...vals.map(v=>v[1])),Math.max(...vals.map(v=>v[2]))];}
+      }
+      return `<tr class="${f.is_pick?'pick':''}"><td class="num">${i+1}</td><td><strong>${f.home}</strong> vs <strong>${f.away}</strong></td><td>${f.league}</td>
+        ${bks.map(bk=>{
+          const o=(f.odds||{})[bk]; if(!o) return `<td>—</td>`;
+          const isBest=Math.abs(o[1]-summ.best[1])<0.001 && summ.best[1];
+          return `<td class="num" style="${isBest?'background:var(--tealBg);font-weight:800;color:var(--tealDark)':''}">${o[0].toFixed(2)} / <strong>${o[1].toFixed(2)}</strong> / ${o[2].toFixed(2)}</td>`;
+        }).join('')}
+        <td class="num">${summ.consensus[0]?summ.consensus[0].toFixed(2)+' / '+summ.consensus[1].toFixed(2)+' / '+summ.consensus[2].toFixed(2):'—'}</td>
+        <td class="num" style="background:var(--goldBg);font-weight:800">${summ.best[0]?summ.best[0].toFixed(2)+' / '+summ.best[1].toFixed(2)+' / '+summ.best[2].toFixed(2):'—'}</td></tr>`;
+    }).join('')}</tbody>`;
+
+  // League filter
+  const leagues=[...new Set(FIXTURES.map(f=>f.league))].sort();
+  const sel=document.getElementById('leagueFilter'); const cur=sel.value;
+  sel.innerHTML='<option value="">All leagues</option>'+leagues.map(l=>`<option ${l===cur?'selected':''}>${l}</option>`).join('');
+}
+
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('leagueFilter').addEventListener('change', render);
+document.getElementById('chips').addEventListener('click', e=>{
+  const b=e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active'); filterF=b.dataset.f; render();
+});
+document.getElementById('runBtn').addEventListener('click', async()=>{
+  const btn=document.getElementById('runBtn'); btn.textContent="↻ Refreshing…"; btn.disabled=true;
+  await load(); btn.textContent="↻ Refresh"; btn.disabled=false;
+});
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click', e=>{
+  document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));
+  e.target.classList.add('active');
+}));
+
+load();
+</script>
+</body>
+</html>

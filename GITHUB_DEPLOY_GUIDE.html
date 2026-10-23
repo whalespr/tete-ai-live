@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TETE AI — GitHub to Live Website Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B1D3A;--ink2:#13294F;--paper:#FFFBF0;--line:#E2DCC8;--gold:#C5A254;--gold2:#E8C86A;--teal:#0E9B8A;--tealBg:#E0F2EF;--muted:#6B7A94;--red:#C0392B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
+.top{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;display:flex;align-items:center;gap:14px;padding:14px 28px;border-bottom:2px solid var(--gold)}
+.top b{font-family:Fraunces,serif;font-weight:900;letter-spacing:.04em;font-size:17px}
+.top b span{color:var(--gold2)}
+.top small{color:#8A9AB5;font-size:12px;margin-left:auto}
+.hero{max-width:900px;margin:28px auto 0;padding:0 28px}
+.hero h1{font-family:Fraunces,serif;font-weight:900;font-size:36px;line-height:.95;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:var(--muted);max-width:640px;margin:10px 0 14px;font-size:14px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:800;letter-spacing:.06em;padding:6px 10px;border-radius:20px;border:1px solid var(--line);background:#fff}
+.badge.done{background:var(--tealBg);border-color:#BFE8E1;color:#0A7A6E}
+.badge.time{background:var(--ink);color:#fff;border-color:var(--ink)}
+.wrap{max-width:900px;margin:18px auto;padding:0 28px 40px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:14px}
+.card h2{font-family:Fraunces,serif;font-weight:900;font-size:20px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.card h2 i{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--gold2);display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:800}
+.card h3{font-size:13px;font-weight:800;letter-spacing:.06em;margin:14px 0 6px;color:var(--ink2)}
+.card p{font-size:13px;color:#2E3A55}
+.card ul, .card ol{margin:8px 0 0 18px;font-size:13px;color:#2E3A55}
+.card li{margin:4px 0}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--gold2);color:var(--ink);display:inline-grid;place-items:center;font-weight:800;font-size:12px;margin-right:6px}
+.callout{border-radius:12px;padding:12px 14px;font-size:12px;display:flex;gap:10px;margin-top:12px;line-height:1.5}
+.callout-warn{background:#FFF8E1;border:1px solid #F0D98A;color:#7A5A00}
+.callout-ok{background:var(--tealBg);border:1px solid #BFE8E1;color:#0A5A4E}
+.callout-info{background:#EFF3FF;border:1px solid #C8D6F0;color:#1A3355}
+.kbd{font-family:JetBrains Mono,monospace;font-size:11px;font-weight:700;background:#0B1D3A;color:#fff;padding:3px 7px;border-radius:6px;white-space:nowrap}
+.code{font-family:JetBrains Mono,monospace;font-size:11px;background:#0B1D3A;color:#E8F0FF;padding:10px 12px;border-radius:10px;overflow:auto;margin-top:8px;white-space:pre-wrap;word-break:break-all}
+.btn{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;color:var(--ink)}
+.btn-dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-gold{background:var(--gold2);color:var(--ink);border-color:var(--gold2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:28px}.top{padding:12px 16px}.hero,.wrap{padding-left:16px;padding-right:16px}}
+.shot{border:1px solid var(--line);border-radius:12px;background:#FFFEF8;padding:12px;margin-top:10px}
+.shot b{font-size:12px;display:block;margin-bottom:6px}
+.shot ul{margin:6px 0 0 16px;font-size:12px;color:#2E3A55}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toc a{font-size:12px;font-weight:700;padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:#fff;text-decoration:none}
+.toc a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+</style>
+</head>
+<body>
+<div class="top"><b>TETE <span>AI</span></b> &nbsp; GitHub → Live Website Guide <small>No coding needed · ~12 minutes</small></div>
+
+<div class="hero">
+  <h1>From folder to <em>live website</em></h1>
+  <p>Follow these clicks in order. You don't need to write any code — just drag, click, and paste 2 free keys. At the end you'll have a real URL like <span style="font-family:JetBrains Mono,monospace;font-weight:700">https://tete-ai-live.vercel.app</span> that updates itself every morning.</p>
+  <div class="badges">
+    <span class="badge done">✓ No coding</span>
+    <span class="badge done">✓ No terminal</span>
+    <span class="badge time">⏱ ~12 min total</span>
+    <span class="badge">Free on GitHub + Vercel</span>
+  </div>
+  <div class="toc">
+    <a href="#s1">1 · GitHub account</a>
+    <a href="#s2">2 · Create repo</a>
+    <a href="#s3">3 · Upload folder</a>
+    <a href="#s4">4 · Vercel account</a>
+    <a href="#s5">5 · Import & Deploy</a>
+    <a href="#s6">6 · Add API keys (go live)</a>
+    <a href="#s7">7 · Check it works</a>
+    <a href="#s8">8 · Custom domain</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- What you need -->
+  <div class="card" style="background:#0B1D3A;color:#fff;border-color:#0B1D3A">
+    <h2 style="color:#fff"><i style="background:var(--gold2);color:var(--ink)">✓</i> Before you start — what you need</h2>
+    <ul style="color:#C8D6F0">
+      <li>Your <b style="color:#fff">tete-ai-live</b> folder (download it from this chat — it contains <span style="font-family:JetBrains Mono,monospace;font-size:12px;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px">index.html</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px">api/predictions.js</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px">vercel.json</span>)</li>
+      <li>An email address (for GitHub + Vercel — can be the same one)</li>
+      <li>5 minutes to get 2 free API keys later (Step 6) — you can skip this and the site still works in demo</li>
+    </ul>
+    <div class="callout callout-info" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#C8D6F0">Tip: Keep this guide open in one tab and do the clicks in another tab side-by-side.</div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="card" id="s1">
+    <h2><i>1</i> Create your GitHub account</h2>
+    <p>GitHub is where your website's files will live. It's free.</p>
+    <ol>
+      <li>Go to <a href="https://github.com" target="_blank">github.com</a> → click <span class="kbd">Sign up</span> (top right).</li>
+      <li>Enter your email, create a password, pick a username (e.g. <span style="font-family:JetBrains Mono,monospace">tete-ai</span>), and verify you're human.</li>
+      <li>GitHub will email you a code — paste it to confirm.</li>
+      <li>When it asks "What do you want to do?" — just click <span class="kbd">Continue</span> / <span class="kbd">Skip</span> until you're on your dashboard (you'll see a dark header with your avatar).</li>
+    </ol>
+    <div class="callout callout-ok"><span>✅</span><span><b>Done when:</b> you see your GitHub dashboard and your profile picture in the top-right corner.</span></div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card" id="s2">
+    <h2><i>2</i> Create a new repository (your website's folder on GitHub)</h2>
+    <ol>
+      <li>On GitHub, click the <span class="kbd">+ ▾</span> in the top-right → <span class="kbd">New repository</span>.</li>
+      <li>Repository name: type <span style="font-family:JetBrains Mono,monospace;font-weight:700;background:#FFF8E1;padding:2px 6px;border-radius:6px">tete-ai-live</span> (exactly like that).</li>
+      <li>Description (optional): <span style="font-style:italic">TETE AI — live draw predictions</span></li>
+      <li>Choose <span class="kbd">Public</span> (needed for free Vercel deploy — your API keys will <b>not</b> be in the files, so this is safe).</li>
+      <li><b>Do NOT</b> tick "Add a README" — leave it unchecked.</li>
+      <li>Click <span class="kbd" style="background:#1B8C4A">Create repository</span>.</li>
+    </ol>
+    <div class="shot">
+      <b>What you'll see next</b>
+      <ul>
+        <li>A page titled <span style="font-weight:700">Quick setup — if you've done this kind of thing before</span></li>
+        <li>A link that says <span class="kbd">uploading an existing file</span> — that's what you click next.</li>
+      </ul>
+    </div>
+    <div class="callout callout-warn"><span>⚠️</span><span><b>Common mistake:</b> Don't create a README here — you'll upload your own files in the next step. If you already ticked it, delete the repo and start this step again.</span></div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="card" id="s3">
+    <h2><i>3</i> Upload your tete-ai-live folder (drag & drop — no git needed)</h2>
+    <p>This is the easiest way — no terminal, no commands.</p>
+    <h3>3A — Click the upload link</h3>
+    <ol>
+      <li>On the empty repo page, click the blue link <span class="kbd">uploading an existing file</span> (under "Quick setup").</li>
+    </ol>
+    <h3>3B — Drag your files in</h3>
+    <ol>
+      <li>Open your file explorer and find the <b>tete-ai-live</b> folder you downloaded from this chat. Open it so you see <span style="font-family:JetBrains Mono,monospace;font-size:12px">index.html</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">api</span> folder, <span style="font-family:JetBrains Mono,monospace;font-size:12px">vercel.json</span>, etc.</li>
+      <li>Select <b>everything inside</b> the <span style="font-family:JetBrains Mono,monospace">tete-ai-live</span> folder — click one file, press <span class="kbd">Ctrl + A</span> (Windows) or <span class="kbd">Cmd + A</span> (Mac), so all files are highlighted.</li>
+      <li>Drag them onto the GitHub upload page — you'll see a dashed box that says <span style="font-style:italic">Drag files here</span>. Drop them. GitHub will list them: <span style="font-family:JetBrains Mono,monospace;font-size:12px">index.html</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">api/predictions.js</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">vercel.json</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">package.json</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">README.md</span>, etc.</li>
+    </ol>
+    <div class="callout callout-warn"><span>⚠️</span><span><b>Important:</b> Drag the <b>contents</b> of the folder, not the folder itself. GitHub should show <span style="font-family:JetBrains Mono,monospace">index.html</span> at the top level, not a nested <span style="font-family:JetBrains Mono,monospace">tete-ai-live/index.html</span>. If you see a folder inside, remove it and drag the inner files instead.</span></div>
+    <h3>3C — Commit (save) the upload</h3>
+    <ol>
+      <li>Scroll down, you'll see a box "Commit changes". Leave the message as <span style="font-style:italic">Add files via upload</span>.</li>
+      <li>Click <span class="kbd" style="background:#1B8C4A">Commit changes</span>.</li>
+    </ol>
+    <div class="callout callout-ok"><span>✅</span><span><b>Done when:</b> your repo page now shows the file list — <span style="font-family:JetBrains Mono,monospace">index.html</span> at the top, plus the <span style="font-family:JetBrains Mono,monospace">api</span> folder. Refresh the page if you don't see them.</span></div>
+    <div class="shot">
+      <b>What success looks like</b>
+      <ul>
+        <li>Repo URL is <span style="font-family:JetBrains Mono,monospace;font-size:12px">github.com/YOUR-USERNAME/tete-ai-live</span></li>
+        <li>Files visible: <span style="font-family:JetBrains Mono,monospace;font-size:12px">index.html</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">api/predictions.js</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">vercel.json</span>, <span style="font-family:JetBrains Mono,monospace;font-size:12px">package.json</span></li>
+        <li>Copy your repo URL from the address bar — you'll paste it into Vercel next.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="card" id="s4">
+    <h2><i>4</i> Create your Vercel account (where your site goes live)</h2>
+    <p>Vercel turns your GitHub files into a real website with a real URL. Free tier is plenty.</p>
+    <ol>
+      <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> → click <span class="kbd">Sign Up</span>.</li>
+      <li>Choose <span class="kbd">Continue with GitHub</span> — this links Vercel to GitHub so it can read your repo. Click <span class="kbd">Authorize Vercel</span> when GitHub asks.</li>
+      <li>Vercel will ask a couple of setup questions — accept defaults, click <span class="kbd">Continue</span>.</li>
+    </ol>
+    <div class="callout callout-ok"><span>✅</span><span><b>Done when:</b> you're on the Vercel dashboard — a dark page with a big <span class="kbd">Add New → Project</span> button.</span></div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="card" id="s5">
+    <h2><i>5</i> Import your repo and Deploy (one click)</h2>
+    <ol>
+      <li>On Vercel dashboard, click <span class="kbd">Add New ▾</span> → <span class="kbd">Project</span>.</li>
+      <li>You'll see your GitHub repo <span style="font-family:JetBrains Mono,monospace;font-weight:700">tete-ai-live</span> in the list. Click <span class="kbd">Import</span> next to it.
+        <br><small style="color:var(--muted)">Don't see it? Click <span class="kbd">Adjust GitHub App Permissions</span> → allow access to <span style="font-family:JetBrains Mono,monospace">tete-ai-live</span> → go back.</small>
+      </li>
+      <li>On the "Configure Project" page: leave everything as-is. Framework says <span style="font-family:JetBrains Mono,monospace">Other</span> — that's correct. Don't change it.</li>
+      <li>Click <span class="kbd" style="background:#000;color:#fff">Deploy</span>. Vercel will build your site — you'll see a spinner for ~30–60 seconds, then confetti.</li>
+    </ol>
+    <div class="shot">
+      <b>What you'll see</b>
+      <ul>
+        <li>A page saying <span style="font-weight:700">Congratulations!</span> with a screenshot of your site.</li>
+        <li>A live URL like <span style="font-family:JetBrains Mono,monospace;font-weight:700;background:#E0F2EF;padding:2px 6px;border-radius:6px">https://tete-ai-live.vercel.app</span> — click it. Your draw predictions are live!</li>
+        <li>There's also a <span class="kbd">Visit</span> button. Your site is already on the internet.</li>
+      </ul>
+    </div>
+    <div class="callout callout-info"><span>ℹ️</span><span>At this point the site shows <b>demo fixtures</b> — that's normal. Real bookmaker odds come in the next step. You already have a live website.</span></div>
+  </div>
+
+  <!-- Step 6 -->
+  <div class="card" id="s6">
+    <h2><i>6</i> Add your 2 free API keys to go live (2 minutes)</h2>
+    <p>Without keys the site shows realistic sample matches. With keys it pulls real odds from 6 bookmakers every day. Both keys are free.</p>
+
+    <h3>6A — Get the keys</h3>
+    <div class="grid2">
+      <div style="border:1px solid var(--line);border-radius:12px;padding:12px;background:#FFFEF8">
+        <b style="font-size:13px">Key 1 — The Odds API</b><br>
+        <small style="color:var(--muted)">500 requests/month free</small>
+        <ol style="margin-top:8px">
+          <li>Go to <a href="https://the-odds-api.com" target="_blank">the-odds-api.com</a> → <span class="kbd">Get API Key</span> / <span class="kbd">Sign Up</span></li>
+          <li>Enter email + password → confirm email.</li>
+          <li>Dashboard shows your <b>API Key</b> — a long string like <span style="font-family:JetBrains Mono,monospace;font-size:11px">8f3a2c…</span>. Copy it.</li>
+        </ol>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:12px;padding:12px;background:#FFFEF8">
+        <b style="font-size:13px">Key 2 — API-Football (optional but recommended)</b><br>
+        <small style="color:var(--muted)">100 requests/day free — for deeper history</small>
+        <ol style="margin-top:8px">
+          <li>Go to <a href="https://www.api-football.com" target="_blank">api-football.com</a> → <span class="kbd">Get Started</span> → it takes you to <span style="font-family:JetBrains Mono,monospace">api-sports.io</span></li>
+          <li>Sign up → Dashboard → copy your <b>API Key</b>.</li>
+          <li>Note: host is <span style="font-family:JetBrains Mono,monospace;font-size:11px">v3.football.api-sports.io</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>6B — Paste them into Vercel (they stay secret, never shown to visitors)</h3>
+    <ol>
+      <li>In Vercel, open your project (<span style="font-family:JetBrains Mono,monospace">tete-ai-live</span>) → top bar click <span class="kbd">Settings</span> → left sidebar click <span class="kbd">Environment Variables</span>.</li>
+      <li>Add 3 variables — click <span class="kbd">Add</span> for each one:
+        <div class="code">ODDS_API_KEY = (paste your The Odds API key)
+API_FOOTBALL_KEY = (paste your API-Football key)
+API_FOOTBALL_HOST = v3.football.api-sports.io</div>
+        For each: leave <span style="font-family:JetBrains Mono,monospace">Environment</span> as <span class="kbd">Production</span> (and tick Preview + Development too if you want). Click <span class="kbd">Save</span>.
+      </li>
+      <li>Go to <span class="kbd">Deployments</span> (top bar) → click the <span class="kbd">⋯</span> on the latest deployment → <span class="kbd">Redeploy</span> → tick "Use existing Build Cache" OFF → <span class="kbd">Redeploy</span>.
+        <br><small style="color:var(--muted)">This rebuilds with your keys baked in server-side. Takes ~45 seconds.</small>
+      </li>
+    </ol>
+    <div class="callout callout-warn"><span>🔒</span><span><b>Security:</b> Environment Variables in Vercel are <b>never</b> visible to visitors — they live only on the server. Your repo on GitHub stays clean. Never paste keys into <span style="font-family:JetBrains Mono,monospace">index.html</span>.</span></div>
+    <div class="callout callout-ok"><span>✅</span><span><b>Done when:</b> after redeploy, visiting your Vercel URL shows <span style="font-weight:700">LIVE — real bookmaker odds</span> in the top bar / banner instead of <span style="font-style:italic">DEMO</span>.</span></div>
+  </div>
+
+  <!-- Step 7 -->
+  <div class="card" id="s7">
+    <h2><i>7</i> Check it works</h2>
+    <ol>
+      <li>Open your Vercel URL (e.g. <span style="font-family:JetBrains Mono,monospace">https://tete-ai-live.vercel.app</span>).</li>
+      <li>You should see: hero with KPIs, <b>Draw Picks</b> cards, <b>All Matches</b> table, <b>Bookmaker Odds</b>, <b>How It Works</b>.</li>
+      <li>Click <span class="kbd">↻ Refresh</span> — it re-scores. Try the league filter and <span class="kbd">★ Bankers</span> pill.</li>
+      <li>Test the API directly: visit <span style="font-family:JetBrains Mono,monospace">https://YOUR-SITE.vercel.app/api/predictions</span> — you should get JSON with <span style="font-family:JetBrains Mono,monospace">mode: "live"</span> (or <span style="font-family:JetBrains Mono,monospace">mode: "demo"</span> if keys aren't set yet).</li>
+    </ol>
+    <div class="shot">
+      <b>If you still see DEMO after adding keys</b>
+      <ul>
+        <li>Check Vercel → Settings → Environment Variables → that <span style="font-family:JetBrains Mono,monospace">ODDS_API_KEY</span> is set for <b>Production</b> (not just Preview).</li>
+        <li>Did you click <span class="kbd">Redeploy</span> after saving? The old build doesn't have the new keys.</li>
+        <li>Check The Odds API dashboard — you have 500 free credits/month. One refresh uses ~8 credits (8 leagues). Don't spam Refresh.</li>
+        <li>Visit <span style="font-family:JetBrains Mono,monospace">/api/predictions</span> — if it says <span style="font-family:JetBrains Mono,monospace">mode:"demo"</span>, the key wasn't read. Double-check for extra spaces.</li>
+      </ul>
+    </div>
+    <div class="callout callout-info"><span>ℹ️</span><span>Auto-updates are already wired: Vercel Cron hits <span style="font-family:JetBrains Mono,monospace">/api/predictions?warm=1</span> daily at <b>07:00 UTC</b> and caching is <span style="font-family:JetBrains Mono,monospace">s-maxage=3600</span>, so visitors always get fast, fresh picks without you doing anything.</span></div>
+  </div>
+
+  <!-- Step 8 -->
+  <div class="card" id="s8">
+    <h2><i>8</i> Add your own domain like tete-ai.com (optional)</h2>
+    <ol>
+      <li>Buy a domain if you don't have one — <a href="https://www.namecheap.com" target="_blank">Namecheap</a>, <a href="https://domains.google" target="_blank">Google Domains</a>, or <a href="https://www.cloudflare.com/products/registrar/" target="_blank">Cloudflare Registrar</a> all work. Search for <span style="font-family:JetBrains Mono,monospace">tete-ai.com</span> (or whatever you want) and check out.</li>
+      <li>In Vercel → Project → <span class="kbd">Settings</span> → <span class="kbd">Domains</span> → type your domain (e.g. <span style="font-family:JetBrains Mono,monospace">tete-ai.com</span>) → click <span class="kbd">Add</span>.</li>
+      <li>Vercel shows you DNS records to add — usually a <span class="kbd">CNAME</span> or <span class="kbd">A</span> record. Copy them.</li>
+      <li>Go to your domain registrar → DNS settings → add the records Vercel gave you. Save.</li>
+      <li>Wait 5–60 minutes for DNS to propagate. Vercel auto-provisions HTTPS — you'll see a green tick when it's live.</li>
+    </ol>
+    <div class="callout callout-ok"><span>✅</span><span><b>Done when:</b> visiting <span style="font-family:JetBrains Mono,monospace">https://tete-ai.com</span> shows your site with a padlock (HTTPS).</span></div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted)">Vercel's Domains page shows status — if it says "Pending" or "Invalid Configuration", double-check the DNS records and give it a bit more time.</p>
+  </div>
+
+  <!-- Done -->
+  <div class="card" style="background:linear-gradient(135deg, #0B1D3A 0%, #13294F 100%);color:#fff;border-color:var(--ink)">
+    <h2 style="color:#fff"><i style="background:var(--gold2);color:var(--ink)">✓</i> You're live!</h2>
+    <p style="color:#C8D6F0;margin-top:6px">Your draw predictions update themselves every morning. You don't need to touch GitHub or Vercel again unless you want to change the design. If you update files on GitHub, Vercel redeploys automatically.</p>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <a href="https://github.com" target="_blank" class="btn" style="background:#fff;color:var(--ink)">Open GitHub →</a>
+      <a href="https://vercel.com" target="_blank" class="btn" style="background:var(--gold2);color:var(--ink);border-color:var(--gold2)">Open Vercel →</a>
+    </div>
+    <hr style="border-color:rgba(255,255,255,.12);margin:16px 0">
+    <p style="color:#8A9AB5;font-size:11px">Need help? Keep this guide. If a step fails, read the callout box for that step — it covers the most common fixes. Your <span style="font-family:JetBrains Mono,monospace">tete-ai-live</span> folder is also your backup — you can always re-upload it.</p>
+  </div>
+
+  <div style="text-align:center;padding:18px;color:var(--muted);font-size:11px">TETE AI Draw Edition v2.0 · For information only · 18+ · Gamble responsibly</div>
+</div>
+</body>
+</html>
